@@ -1,19 +1,23 @@
+// script.js
 document.addEventListener("DOMContentLoaded", function () {
-    // Selecting elements
-    const inputField = document.getElementById("userInput");
-    const submitButton = document.getElementById("submitBtn");
-    const resultDisplay = document.getElementById("result");
-
-    // Event listener for button click
-    submitButton.addEventListener("click", function () {
-        let userInput = inputField.value;
-        if (userInput.trim() === "") {
-            resultDisplay.innerText = "Please enter a value!";
-            return;
-        }
-
-        // Simulated response
-        let simulatedOutput = "Simulated Prediction: " + (parseFloat(userInput) * 1.2).toFixed(2);
-        resultDisplay.innerText = simulatedOutput;
+    const goButton = document.getElementById("goBtn");
+    goButton.addEventListener("click", function () {
+        window.location.href = 'simulate_page.html';
     });
 });
+
+async function runSimulation() {
+    try {
+        const response = await fetch('/simulate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({n_points: 100})
+        });
+        const data = await response.json();
+        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+document.getElementById('runSimBtn')?.addEventListener('click', runSimulation);
