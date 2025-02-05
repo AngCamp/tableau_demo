@@ -1,9 +1,11 @@
 // script.js
 document.addEventListener("DOMContentLoaded", function () {
-    const goButton = document.getElementById("goBtn");
-    goButton.addEventListener("click", function () {
-        window.location.href = 'simulate_page.html';
-    });
+    const goBtn = document.getElementById("goBtn");
+    if (goBtn) {
+        goBtn.addEventListener("click", function() {
+            window.location.href = "./simulate_page.html";
+        });
+    }
 });
 
 async function runSimulation() {
